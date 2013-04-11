@@ -40,8 +40,14 @@ public class GaspriceView2 {
 		
 		GetHighLow getHighLow = new GetHighLow();
 		highest = getHighLow.getHighest(data3);
-		System.out.println("Høyeste pris er " + highest.getPrice());
 		laveste = getHighLow.getLavest(data3);
+		
+		//Kjør paneler:
+		//kjør hovedpanel
+		//kjør menypanel
+		//kjør grafPanel
+		
+		System.out.println("Høyeste pris er " + highest.getPrice());
 		System.out.println("Laveste pris er " + laveste.getPrice());
 	}
 }
