@@ -4,9 +4,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.net.URL;
 
-import javax.swing.JApplet;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class LoadingScreen{
@@ -14,45 +17,59 @@ public class LoadingScreen{
 	JFrame frame;
 	Panel panel;
 	public LoadingScreen(){
-
 		JFrame frame = new JFrame("Oppgave#2");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel = new Panel();
 		frame.getContentPane().add(panel);
-		frame.setSize(1024, 640);
+		frame.setSize(1024, 640); 
 		frame.setVisible(true);
 	}	
 	
 	public void setProgress() {
-		for (int i = 0; i < 10; i++)
-			{panel.setProgress();
-			try {
-				this.wait(10);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			}
+		panel.setProgress();
 	}
 }
 
+@SuppressWarnings("serial")
 class Panel extends JPanel{
 	
-	int variable = 0;
+	int progressionBar = 0;
+	JLabel label;
+	Color backgroundColor = new Color(83, 198, 241);	//Color: 'a shade of blue'.
+	URL URLloadingAnimation;
+	Icon imageLoadingAnimation;
 	
 	Panel(){
+		setLayout(null);
 		setPreferredSize(new Dimension(1024, 640));
+		setBackground(backgroundColor);
+		
+		URLloadingAnimation = getClass().getResource("/media/loadingAnimation.gif");
+		imageLoadingAnimation = new ImageIcon(URLloadingAnimation);
+		
+		label = new JLabel(imageLoadingAnimation);
+		label.setSize(new Dimension(170, 40));
+		label.setVisible(true);
+		add(label);
 	}
 	
 	public void setProgress(){
-		variable += 5;
+		progressionBar += getWidth()/4;
 		repaint();
 	}
 	
+	/******************************************************************************************
+	 * Paints the progress bar.
+	 * Note that Paint Component is compatible with different width and height for the frame.
+	 ******************************************************************************************/
 	public void paintComponent(Graphics g){
-		System.out.println("LOL");
+		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		g2.setBackground(Color.black);
-		g2.fillRect(0, 50, variable, 100);
+		label.setLocation((getWidth()/2)-85, getHeight()/2);	//label.setLocation() is here to work properly with getWidth/Height.
+		
+		g2.setColor(Color.LIGHT_GRAY);
+		g2.fillRect( 0, (getHeight()/2)+50, getWidth(), 100);	//potential progress bar.
+		g2.setColor(Color.gray);
+		g2.fillRect(0, (getHeight()/2)+50, progressionBar, 100);		//progress bar.
 	}
 }
