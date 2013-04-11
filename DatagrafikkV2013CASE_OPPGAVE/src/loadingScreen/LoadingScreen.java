@@ -12,26 +12,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class LoadingScreen{
+public class LoadingScreen extends JPanel{	
 	
-	JFrame frame;
-	Panel panel;
-	public LoadingScreen(){
-		JFrame frame = new JFrame("Oppgave#2");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		panel = new Panel();
-		frame.getContentPane().add(panel);
-		frame.setSize(1024, 640); 
-		frame.setVisible(true);
-	}	
+	
 	
 	public void setProgress() {
-		panel.setProgress();
+		progressionBar += getWidth()/4;
+		repaint();
+		System.out.println("kjør meg");
 	}
-}
-
-@SuppressWarnings("serial")
-class Panel extends JPanel{
 	
 	int progressionBar = 0;
 	JLabel label;
@@ -39,7 +28,7 @@ class Panel extends JPanel{
 	URL URLloadingAnimation;
 	Icon imageLoadingAnimation;
 	
-	Panel(){
+	public LoadingScreen(){
 		setLayout(null);
 		setPreferredSize(new Dimension(1024, 640));
 		setBackground(backgroundColor);
@@ -51,11 +40,6 @@ class Panel extends JPanel{
 		label.setSize(new Dimension(170, 40));
 		label.setVisible(true);
 		add(label);
-	}
-	
-	public void setProgress(){
-		progressionBar += getWidth()/4;
-		repaint();
 	}
 	
 	/******************************************************************************************
