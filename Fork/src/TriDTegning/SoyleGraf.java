@@ -35,98 +35,283 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
 
 import model.Entities.PricePoint;
 
-public class SoyleGraf extends JPanel implements MouseListener
+public class SoyleGraf extends JPanel
 {
 
 	PickCanvas pc;
 	ArrayList<ArrayList<PricePoint>> DataFieldValue;
 	Canvas3D cv;
-	
+
 	Cylinder cyl;
-
 	Cylinder cyl1;
-
 	Cylinder cyl2;
-
 	Cylinder cyl3;
+	
+	TransformGroup tg;
+	TransformGroup tg1;
+	TransformGroup tg2;
+	TransformGroup tg3;
+	
+	double oldHoyde ;
+	double oldHoyde1;
+	double oldHoyde2;
+	double oldHoyde3;
+	
 	public SoyleGraf(ArrayList<ArrayList<PricePoint>> data)
 	{
 		DataFieldValue = data;
+		
+		oldHoyde = ((double) DataFieldValue.get(0).get(DataFieldValue.get(0).size()-1).getPrice())/100-0.3; 
+		oldHoyde1 = ((double) DataFieldValue.get(1).get(DataFieldValue.get(1).size()-1).getPrice())/100-0.3;
+		oldHoyde2 = ((double) DataFieldValue.get(2).get(DataFieldValue.get(2).size()-1).getPrice())/100-0.3;
+		oldHoyde3 = ((double) DataFieldValue.get(3).get(DataFieldValue.get(3).size()-1).getPrice())/100-0.3;
+		
 		GraphicsConfiguration gc = SimpleUniverse.getPreferredConfiguration();
 		cv = new Canvas3D(gc);
 		setLayout(new BorderLayout());
 		add(cv, BorderLayout.CENTER);
-		cv.addMouseListener(this);
-		
-	    BranchGroup bg = createStill();
+
+		BranchGroup bg = createStill();
 		bg.compile();
 		pc = new PickCanvas(cv, bg);
-	    pc.setMode(PickTool.GEOMETRY);
+		pc.setMode(PickTool.GEOMETRY);
 		SimpleUniverse su = new SimpleUniverse(cv);
 		su.getViewingPlatform().setNominalViewingTransform();
 		su.addBranchGraph(bg);
 	}
+	public void Animation(double[] newValues)
+	{
+		Transform3D newV = new Transform3D();
+		tg.getTransform(newV);
 
+		Vector3d scales = new Vector3d();
+		newV.getScale(scales);
+
+
+		System.out.println(scales.y*50);
+		System.out.println(newValues[0]);
+		double midler = 0.005;
+
+		if(scales.y < newValues[0]/50)
+		{
+			while(scales.y < newValues[0]/50)
+			{
+				scales.y = scales.y += 0.01;
+				newV.setScale(new Vector3d(0.02,scales.y,0.02));
+
+				try {Thread.sleep(100);}	//to make sure the last progressbar in loadingPanel is shown.
+				catch(InterruptedException ex) {Thread.currentThread().interrupt();}
+				oldHoyde += midler;
+				newV.setTranslation(new Vector3d(-0.5,oldHoyde,0));
+				tg.setTransform(newV);
+
+			}
+		}
+		else
+		{
+			while(scales.y > newValues[0]/50)
+			{
+				scales.y = scales.y -= 0.01;
+				newV.setScale(new Vector3d(0.02,scales.y,0.02));
+
+				try {Thread.sleep(100);}	//to make sure the last progressbar in loadingPanel is shown.
+				catch(InterruptedException ex) {Thread.currentThread().interrupt();}
+				oldHoyde -= midler;
+				newV.setTranslation(new Vector3d(-0.5,oldHoyde,0));
+				tg.setTransform(newV);
+
+			}
+		}
+
+		tg1.getTransform(newV);
+
+		newV.getScale(scales);
+
+
+
+		if(scales.y < newValues[1]/50)
+		{
+			while(scales.y < newValues[1]/50)
+			{
+				scales.y = scales.y += 0.01;
+				newV.setScale(new Vector3d(0.02,scales.y,0.02));
+
+				try {Thread.sleep(100);}	//to make sure the last progressbar in loadingPanel is shown.
+				catch(InterruptedException ex) {Thread.currentThread().interrupt();}
+				oldHoyde1 += midler;
+				newV.setTranslation(new Vector3d(-0.25,oldHoyde1,0));
+				tg1.setTransform(newV);
+
+			}
+		}
+		else
+		{
+			while(scales.y > newValues[1]/50)
+			{
+				scales.y = scales.y -= 0.01;
+				newV.setScale(new Vector3d(0.02,scales.y,0.02));
+
+				try {Thread.sleep(100);}	//to make sure the last progressbar in loadingPanel is shown.
+				catch(InterruptedException ex) {Thread.currentThread().interrupt();}
+				oldHoyde1 -= midler;
+				newV.setTranslation(new Vector3d(-0.25,oldHoyde1,0));
+				tg1.setTransform(newV);
+
+			}
+		}
+		tg2.getTransform(newV);
+
+		newV.getScale(scales);
+
+
+
+		
+		if(scales.y < newValues[2]/50){
+			while(scales.y < newValues[2]/50)
+			{
+				scales.y = scales.y += 0.01;
+				newV.setScale(new Vector3d(0.02,scales.y,0.02));
+
+				try {Thread.sleep(100);}	//to make sure the last progressbar in loadingPanel is shown.
+				catch(InterruptedException ex) {Thread.currentThread().interrupt();}
+				oldHoyde2 += midler;
+				newV.setTranslation(new Vector3d(0,oldHoyde2,0));
+				tg2.setTransform(newV);
+
+			}
+		}
+		else
+		{
+			while(scales.y > newValues[2]/50)
+			{
+				scales.y = scales.y -= 0.01;
+				newV.setScale(new Vector3d(0.02,scales.y,0.02));
+
+				try {Thread.sleep(100);}	//to make sure the last progressbar in loadingPanel is shown.
+				catch(InterruptedException ex) {Thread.currentThread().interrupt();}
+				oldHoyde2 -= midler;
+				newV.setTranslation(new Vector3d(0,oldHoyde2,0));
+				tg2.setTransform(newV);
+
+			}
+		}
+		tg3.getTransform(newV);
+
+		newV.getScale(scales);
+
+
+
+		if(scales.y < newValues[3]/50)
+		{
+
+
+			while(scales.y < newValues[3]/50)
+			{
+				scales.y = scales.y += 0.01;
+				newV.setScale(new Vector3d(0.02,scales.y,0.02));
+
+				try {Thread.sleep(100);}	//to make sure the last progressbar in loadingPanel is shown.
+				catch(InterruptedException ex) {Thread.currentThread().interrupt();}
+				oldHoyde3 += midler;
+				newV.setTranslation(new Vector3d(0.25,oldHoyde3,0));
+				tg3.setTransform(newV);
+
+			}
+		}
+		else
+		{
+			while(scales.y > newValues[3]/50)
+			{
+				scales.y = scales.y -= 0.01;
+				newV.setScale(new Vector3d(0.02,scales.y,0.02));
+
+				try {Thread.sleep(100);}	//to make sure the last progressbar in loadingPanel is shown.
+				catch(InterruptedException ex) {Thread.currentThread().interrupt();}
+				oldHoyde3 -= midler;
+				newV.setTranslation(new Vector3d(0.25,oldHoyde3,0));
+				tg3.setTransform(newV);
+
+			}
+		}
+
+	}
 	public BranchGroup createStill()
 	{
 		BranchGroup root = new BranchGroup();
 		Transform3D tr = new Transform3D();
-		TransformGroup tg;
-		TransformGroup tg1;
-		TransformGroup tg2;
-		TransformGroup tg3;
 		TransformGroup tgAxes;
 		TransformGroup TGHolder = new TransformGroup();
+		TGHolder.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 
-		
+		double[] values = new double[4];
+
+		values[0] = (double) DataFieldValue.get(0).get(DataFieldValue.get(0).size()-1).getPrice();
+		System.out.println((double) DataFieldValue.get(0).get(DataFieldValue.get(0).size()-1).getPrice());
+		values[1] = (double) DataFieldValue.get(1).get(DataFieldValue.get(1).size()-1).getPrice();
+		values[2] = (double) DataFieldValue.get(2).get(DataFieldValue.get(2).size()-1).getPrice();
+		values[3] = (double) DataFieldValue.get(3).get(DataFieldValue.get(3).size()-1).getPrice();
+
 		Group shape = new Axes();
 
 		Appearance ap = new Appearance();
 		ap.setMaterial(new Material());
 
-		tr.setScale(0.02f);
+		tr.setScale(new Vector3d(0.02,values[0]/50,0.02));
 		tr.setTranslation(new Vector3d(-0.5,(((double) DataFieldValue.get(0).get(DataFieldValue.get(0).size()-1).getPrice())/100)-0.3,0));
 		tg = new TransformGroup(tr);
 		tr.setIdentity();
-
-		tr.setScale(0.02f);
+		tg.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+		tr.setScale(new Vector3d(0.02,values[1]/50,0.02));
 		tr.setTranslation(new Vector3d(-0.25,(((double) DataFieldValue.get(1).get(DataFieldValue.get(1).size()-1).getPrice())/100)-0.3,0));
 		tg1 = new TransformGroup(tr);
+
+		tg1.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		tr.setIdentity();
 
-		tr.setScale(0.02f);
+		tr.setScale(new Vector3d(0.02,values[2]/50,0.02));
 		tr.setTranslation(new Vector3d(0,(((double) DataFieldValue.get(2).get(DataFieldValue.get(2).size()-1).getPrice())/100)-0.3,0));
 		tg2 = new TransformGroup(tr);
+
+		tg2.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		tr.setIdentity();
 
-		tr.setScale(0.02f);
+		tr.setScale(new Vector3d(0.02,values[3]/50,0.02));
 		tr.setTranslation(new Vector3d(0.25,(((double) DataFieldValue.get(3).get(DataFieldValue.get(3).size()-1).getPrice())/100)-0.3,0));
 		tg3 = new TransformGroup(tr);
+
+		tg3.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		tr.setIdentity();
 
 		tr.setScale(0.5f);
 		tr.setTranslation(new Vector3d(-0.75,0,0));
 		tgAxes = new TransformGroup(tr);
-		
+
+		/*
 		cyl = new Cylinder(1f, (float) DataFieldValue.get(0).get(DataFieldValue.get(0).size()-1).getPrice(), ap);
 		cyl1 = new Cylinder(1f, (float) DataFieldValue.get(1).get(DataFieldValue.get(1).size()-1).getPrice(), ap);	
 		cyl2 = new Cylinder(1f, (float) DataFieldValue.get(2).get(DataFieldValue.get(2).size()-1).getPrice(), ap);
 		cyl3 = new Cylinder(1f, (float) DataFieldValue.get(3).get(DataFieldValue.get(3).size()-1).getPrice(), ap);
-		
+		 */
+
+		cyl = new Cylinder(1f, 1f, ap);
+		cyl1 = new Cylinder(1f, 1f, ap);
+		cyl2 = new Cylinder(1f, 1f, ap);
+		cyl3 = new Cylinder(1f, 1f, ap);
+
 		cyl.setName("0");
 		cyl1.setName("1");
 		cyl2.setName("2");
 		cyl3.setName("3");
-		
+
 		BoundingSphere bounds = new BoundingSphere();
 
-	    PickTool.setCapabilities(cyl.getShape(Cylinder.BODY), PickTool.INTERSECT_TEST);
-	    
-	    PickTool.setCapabilities(cyl1.getShape(Cylinder.BODY), PickTool.INTERSECT_TEST);
+		PickTool.setCapabilities(cyl.getShape(Cylinder.BODY), PickTool.INTERSECT_TEST);
 
-	    PickTool.setCapabilities(cyl2.getShape(Cylinder.BODY), PickTool.INTERSECT_TEST);
+		PickTool.setCapabilities(cyl1.getShape(Cylinder.BODY), PickTool.INTERSECT_TEST);
 
-	    PickTool.setCapabilities(cyl3.getShape(Cylinder.BODY), PickTool.INTERSECT_TEST);
+		PickTool.setCapabilities(cyl2.getShape(Cylinder.BODY), PickTool.INTERSECT_TEST);
+
+		PickTool.setCapabilities(cyl3.getShape(Cylinder.BODY), PickTool.INTERSECT_TEST);
 
 
 		Background background = new Background(1.0f, 1.0f, 1.0f);
@@ -158,62 +343,4 @@ public class SoyleGraf extends JPanel implements MouseListener
 		return root;
 
 	}
-
-	@Override
-	public void mouseClicked(MouseEvent arg0) 
-	{
-		
-		pc.setShapeLocation(arg0);
-	    PickResult results = pc.pickAny();
-	    System.out.println(results.getObject().getParent().getName());
-	    if(results.getObject().getParent().getName().equals("0"))
-	    {
-	    	JOptionPane.showMessageDialog(this, DataFieldValue.get(0).get(0).getEsid() + " "
-	    									 +  DataFieldValue.get(0).get(DataFieldValue.get(0).size()-1).getPrice() + " "
-	    			                         +  DataFieldValue.get(0).get(DataFieldValue.get(0).size()-1).getUnit());
-	    }
-	    if(results.getObject().getParent().getName().equals("1"))
-	    {
-	    	JOptionPane.showMessageDialog(this, DataFieldValue.get(1).get(0).getEsid() + " "
-	    									 +  DataFieldValue.get(1).get(DataFieldValue.get(1).size()-1).getPrice() + " "
-	    			                         +  DataFieldValue.get(1).get(DataFieldValue.get(1).size()-1).getUnit());
-	    }
-	    if(results.getObject().getParent().getName().equals("2"))
-	    {
-	    	JOptionPane.showMessageDialog(this, DataFieldValue.get(2).get(0).getEsid() + " "
-	    									 +  DataFieldValue.get(2).get(DataFieldValue.get(2).size()-1).getPrice() + " "
-	    			                         +  DataFieldValue.get(2).get(DataFieldValue.get(2).size()-1).getUnit());
-	    }
-	    if(results.getObject().getParent().getName().equals("3"))
-	    {
-	    	JOptionPane.showMessageDialog(this, DataFieldValue.get(3).get(0).getEsid() + " "
-	    									 +  DataFieldValue.get(3).get(DataFieldValue.get(3).size()-1).getPrice() + " "
-	    			                         +  DataFieldValue.get(3).get(DataFieldValue.get(3).size()-1).getUnit());
-	    }
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

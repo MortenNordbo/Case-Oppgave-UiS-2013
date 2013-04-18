@@ -15,8 +15,19 @@ public class mainPanel extends JPanel{
 	LoadingPanel loadingPanel;
 	MenuPanel menuPanel;
 	SoyleGraf maxMinGraph;
+	ArrayList<ArrayList<PricePoint>> data;
+	double[] values = null;
 
 	
+
+	public double[] getValues() {
+		return values;
+	}
+
+	public void setValues(double[] values) {
+		this.values = values;
+		maxMinGraph.Animation(values);
+	}
 
 	public mainPanel(int frameWidth, int frameHeight, LoadingPanel loadingPanel){
 		setLayout(null);
@@ -24,7 +35,7 @@ public class mainPanel extends JPanel{
 		this.frameHeight = frameHeight;
 		this.loadingPanel = loadingPanel;
 		
-		menuPanel = new MenuPanel();	
+		menuPanel = new MenuPanel(this);	
 
 		menuPanel.setLocation(7*frameWidth/8, 0);
 		menuPanel.setSize(frameWidth/8, frameHeight);
@@ -54,6 +65,9 @@ public class mainPanel extends JPanel{
 		menuPanel.setVisible(true);
 		maxMinGraph.setVisible(true);
 		
+		this.data = data;
+		
+		menuPanel.setData(data);
 		//.setVisible(true);
 	}
 	

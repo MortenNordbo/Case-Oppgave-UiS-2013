@@ -34,11 +34,6 @@ public class GaspriceView2 {
 		ConvertIntoUnit Converter = new ConvertIntoUnit();
 		data3.add(Converter.ConvertThis(data3.get(1)));
 		data3.remove(1);
-		System.out.println(data3.get(0).get(8).toString());
-		System.out.println(data3.get(1).get(9).toString());
-
-		System.out.println(data3.get(2).get(9).toString());
-		System.out.println(data3.get(3).get(9).toString());
 		
 		GetHighLow getHighLow = new GetHighLow();
 		highest = getHighLow.getHighest(data3);
