@@ -34,16 +34,16 @@ public class MenuPanel extends JPanel implements ActionListener{
 		setLayout(new GridLayout(0, 1));
 		setBackground(Color.green);
 
-		firstBtn = new JButton("First");
+		firstBtn = new JButton("Velg dato");
 		firstBtn.addActionListener(this);
 		
-		scndBtn = new JButton("Second");
+		scndBtn = new JButton("Gå igjennom all info");
 		scndBtn.addActionListener(this);
 		
-		thirdBtn = new JButton("Third");
+		thirdBtn = new JButton("TBD");
 		thirdBtn.addActionListener(this);
 		
-		fourthBtn = new JButton("Fourth");
+		fourthBtn = new JButton("TBD");
 		fourthBtn.addActionListener(this);
 		
 		//TDOD: Load btns with pictures(?)
@@ -70,6 +70,7 @@ public class MenuPanel extends JPanel implements ActionListener{
 			String datoen = aar+maaned+dato;
 			double dato1 = 0;
 			dato1 = Double.parseDouble(datoen);
+			PricePoint price = null;
 			
 			double[] values = new double[4];
 			for (int i = 0; i < data.get(0).size(); i++)
@@ -77,6 +78,7 @@ public class MenuPanel extends JPanel implements ActionListener{
 				if(data.get(0).get(i).getObservationDate() == dato1)
 				{
 					values[0] = data.get(0).get(i).getPrice();
+					price = data.get(0).get(i);
 				}
 			}
 			
@@ -103,11 +105,24 @@ public class MenuPanel extends JPanel implements ActionListener{
 					values[3] = data.get(3).get(i).getPrice();
 				}
 			}
-			mainPanel.setValues(values);
+			mainPanel.setValues(values, price);
 			
 		}
-		else if (e.getSource() == scndBtn){
-			System.out.println("you have pressed: "+scndBtn);
+		else if (e.getSource() == scndBtn)
+		{
+			System.out.println("LOL");
+			double[] values = new double[4];
+			PricePoint price;
+			for (int i = 0; i < data.get(0).size(); i++)
+			{
+				values[0] = data.get(0).get(i).getPrice();
+				values[1] = data.get(1).get(i).getPrice();
+				values[2] = data.get(2).get(i).getPrice();
+				values[3] = data.get(3).get(i).getPrice();
+				price = data.get(0).get(i);
+				mainPanel.setValues(values, price);
+			}
+			
 		}
 		else if (e.getSource() == thirdBtn){
 			System.out.println("you have pressed: "+thirdBtn);

@@ -24,9 +24,9 @@ public class mainPanel extends JPanel{
 		return values;
 	}
 
-	public void setValues(double[] values) {
+	public void setValues(double[] values,PricePoint datoFinder) {
 		this.values = values;
-		maxMinGraph.Animation(values);
+		maxMinGraph.Animation(values, datoFinder);
 	}
 
 	public mainPanel(int frameWidth, int frameHeight, LoadingPanel loadingPanel){
@@ -68,7 +68,6 @@ public class mainPanel extends JPanel{
 		this.data = data;
 		
 		menuPanel.setData(data);
-		//.setVisible(true);
 	}
 	
 	private void graphPanelSetup(JPanel panel){

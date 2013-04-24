@@ -15,19 +15,23 @@ public class Axes extends Group {
 		ap.setMaterial(new Material());
 		Font3D font = new Font3D(new Font("SanSerif", Font.PLAIN, 1),
 				new FontExtrusion());
-		Text3D x = new Text3D(font, "x");
+		Text3D x = new Text3D(font, "Marked");
 		Shape3D xShape = new Shape3D(x, ap);
-		Text3D y = new Text3D(font, "y");
+		Text3D y = new Text3D(font, "Pris");
 		Shape3D yShape = new Shape3D(y, ap);
 		// transform for texts
 		Transform3D tTr = new Transform3D();
-
 		Transform3D XTr = new Transform3D();
+		
+		TransformGroup Holder = new TransformGroup();
+		
 		tTr.setTranslation(new Vector3d(-0.12, 0.6, -0.04));
 
 		XTr.setTranslation(new Vector3d(-0.12, 1.2, -0.04));
-		tTr.setScale(0.5);
-		XTr.setScale(0.5f);
+		tTr.setScale(0.2);
+		
+		XTr.setScale(0.2f);
+		XTr.setTranslation(new Vector3d(2.40,-0.7,0));
 		// transform for arrows
 		Transform3D aTr = new Transform3D();
 		Transform3D bTr = new Transform3D();
@@ -40,10 +44,13 @@ public class Axes extends Group {
 		xTr.setTranslation(new Vector3d(1.1, -0.65, 0));
 		TransformGroup xTg = new TransformGroup(xTr);
 		xTg.addChild(xAxis);
-		this.addChild(xTg);
+		
+		this.addChild(Holder);
+		Holder.addChild(xTg);
 		TransformGroup xTextTg = new TransformGroup(XTr);
 		xTextTg.addChild(xShape);
-		xTg.addChild(xTextTg);
+		
+		Holder.addChild(xTextTg);
 		Cone xArrow = new Cone(0.1f, 0.2f);
 		TransformGroup xArrowTg = new TransformGroup(aTr);
 		xArrowTg.addChild(xArrow);
